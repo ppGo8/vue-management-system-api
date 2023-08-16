@@ -1,7 +1,10 @@
 const db = require('../../db/index')
+// 用户密码加密算法
 const bcrypt = require('bcryptjs')
+// 生成token的方法
 const jwt = require('jsonwebtoken')
 const config = require('../../config/keys')
+const menu = require('./menu')
 
 // 注册的回调函数
 exports.register = (req, res) => {
@@ -30,15 +33,16 @@ exports.register = (req, res) => {
         // console.log('@加密前:', adminInfo.password);
         adminInfo.password = bcrypt.hashSync(adminInfo.password, 10)
         // console.log('@加密后:', adminInfo.password);
-
         const sql = 'insert into admin set ?'
         db.query(sql, {
             id: 0,
             name: adminInfo.name,
             password: adminInfo.password,
-            identity: adminInfo.identify || '员工'
+            identity: adminInfo.identity
         }
         ), (err, results) => {
+            // 这里的代码没有执行?
+            console.log('我是用户注册时未执行的代码');
             if (err) {
                 return res.send({
                     status: 404,
@@ -49,22 +53,28 @@ exports.register = (req, res) => {
             if (results.affectedRows !== 1) {
                 return res.status(404).json('注册用户失败，请稍后再试')
             }
-
-            res.json({
-                status: 200,
-                message: '注册成功',
-                name: adminInfo.name,
-                password: adminInfo.password,
-                identity: adminInfo.identity,
-            })
+            // res.json({
+            //     status: 200,
+            //     message: '注册成功',
+            //     name: adminInfo.name,
+            //     identity: adminInfo.identity,
+            // })
 
         }
+        res.json({
+            status: 200,
+            message: '注册成功',
+            name: adminInfo.name,
+            identity: adminInfo.identity,
+        })
     })
+
 
 }
 
-// 注册的回调函数
+// 登录的回调函数
 exports.login = (req, res) => {
+    console.log('有人想登陆!');
     // const adminInfo = req.body
     const name = req.body.name
     const password = req.body.password
@@ -82,14 +92,14 @@ exports.login = (req, res) => {
             return res.status(404).json(err)
         }
         if (results.length !== 1) {
-            return res.status(400).json('用户名不存在!')
+            return res.status(400).json('用户名不存在')
         }
 
         // bcrypt判断密码是否正确,返回布尔值
         const compareResult = bcrypt.compareSync(password, results[0].password)
-        console.log(password, results[0].password);
+        // console.log(password, results[0].password);
         if (!compareResult) {
-            return res.status(400).json('用户名或密码输入错误,请重新输入')
+            return res.status(400).json('密码输入错误 请重新输入')
         }
 
         // 设置token
@@ -98,17 +108,19 @@ exports.login = (req, res) => {
             {
                 id: results[0].id,
                 name: results[0].name,
-                identify: results[0].identify,
+                identity: results[0].identity,
             }, config.jwtSecretKey,
             {
                 expiresIn: '24h' // token有效期
             })
+
         res.json({
             status: 200,
-            name: results,
             massage: '登录成功!',
+            name: results[0].name,
             // 在服务器端拼接上 Bearer 的前缀,方便客户端使用
             token: 'Bearer ' + token,
+            menu: results[0].identity === 'admin' ? menu.admin : menu.employ
         })
     })
 }
@@ -121,6 +133,4 @@ exports.checkToken = (req, res) => {
         name: req.user[0].name,
         identity: req.user[0].identity
     })
-
-
 }

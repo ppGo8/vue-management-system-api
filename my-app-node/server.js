@@ -28,6 +28,9 @@ app.use('/api/admin', adminRouter)
 // 用户路由
 const usersRouter = require('./router/api/users')
 app.use('/api', usersRouter)
+// 资金路由
+const fundsRouter = require('./router/api/funds')
+app.use('/api', fundsRouter)
 
 
 const port = process.env.PORT || 5000   // process.env.PORT:读取当前目录下环境变量port的值
