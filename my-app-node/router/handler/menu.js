@@ -33,20 +33,44 @@ module.exports = {
             url: 'FundList.vue'
         },
         {
-            label: '其他',
+            // path: '/file',
+            // name: 'file',
+            // url: 'File.vue',
+            label: '文件管理',
+            icon: 'folder',
+            children: [
+                {
+                    path: '/uploadFile',
+                    name: 'uploadFile',
+                    label: '文件上传',
+                    icon: 'setting',
+                    url: 'UploadFile.vue'
+                },
+                {
+                    path: '/excelFile',
+                    name: 'excelFile',
+                    label: 'excel文件操作',
+                    icon: 'setting',
+                    url: 'ExcelFile.vue'
+                },
+            ]
+
+        },
+        {
+            label: '编辑器',
             icon: 'location',
             children: [
                 {
                     path: '/page1',
                     name: 'page1',
-                    label: '页面1',
+                    label: '富文本',
                     icon: 'setting',
                     url: 'PageOne.vue'
                 },
                 {
                     path: '/page2',
                     name: 'page2',
-                    label: '页面2',
+                    label: 'markdown',
                     icon: 'setting',
                     url: 'PageTwo.vue'
                 }
@@ -75,6 +99,13 @@ module.exports = {
             label: '资金管理',
             icon: 'bank-card',
             url: 'FundList.vue'
+        },
+        {
+            path: '/file',
+            name: 'file',
+            label: '文件管理',
+            icon: 'folder',
+            url: 'File.vue'
         },
     ]
 }
