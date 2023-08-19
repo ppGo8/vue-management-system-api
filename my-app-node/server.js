@@ -5,6 +5,7 @@ const db = require('./db/index')   // 导入自定义的数据库连接对象
 const passport = require('passport')
 const uploader = require('express-fileupload')
 
+
 // 实例化
 const app = express()
 
@@ -38,6 +39,10 @@ app.use('/api', fundsRouter)
 // 文件上传路由
 const uploadRouter = require('./router/api/upload')
 app.use('/api', uploadRouter)
+// excel获得公司列表信息路由
+const companyRouter = require('./router/api/company')
+app.use('/api', companyRouter)
+
 
 const port = process.env.PORT || 5000   // process.env.PORT:读取当前目录下环境变量port的值
 app.listen(port, () => {

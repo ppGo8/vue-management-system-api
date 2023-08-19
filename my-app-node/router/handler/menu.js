@@ -47,11 +47,18 @@ module.exports = {
                     url: 'UploadFile.vue'
                 },
                 {
-                    path: '/excelFile',
-                    name: 'excelFile',
-                    label: 'excel文件操作',
+                    path: '/excelUpload',
+                    name: 'excelUpload',
+                    label: '上传excel',
                     icon: 'setting',
-                    url: 'ExcelFile.vue'
+                    url: 'ExcelUpload.vue'
+                },
+                {
+                    path: '/excelExport',
+                    name: 'excelExport',
+                    label: '导出excel',
+                    icon: 'setting',
+                    url: 'ExcelExport.vue'
                 },
             ]
 
