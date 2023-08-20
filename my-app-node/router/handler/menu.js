@@ -12,13 +12,6 @@ module.exports = {
             url: 'Home.vue'
         },
         {
-            path: '/mall',
-            name: 'mall',
-            label: '商品管理',
-            icon: 'video-play',
-            url: 'Mall.vue'
-        },
-        {
             path: '/user',
             name: 'user',
             label: '用户管理',
@@ -33,9 +26,7 @@ module.exports = {
             url: 'FundList.vue'
         },
         {
-            // path: '/file',
-            // name: 'file',
-            // url: 'File.vue',
+
             label: '文件管理',
             icon: 'folder',
             children: [
@@ -92,14 +83,15 @@ module.exports = {
             label: '首页',
             icon: 's-home',
             url: 'Home.vue'
+
         },
-        {
-            path: '/video',
-            name: 'video',
-            label: '商品管理',
-            icon: 'video-play',
-            url: 'Mall.vue'
-        },
+        // {
+        //     path: '/user',
+        //     name: 'user',
+        //     label: '用户管理',
+        //     icon: 'user',
+        //     url: 'User.vue'
+        // },
         {
             path: '/fundlist',
             name: 'fundlist',
@@ -108,11 +100,53 @@ module.exports = {
             url: 'FundList.vue'
         },
         {
-            path: '/file',
-            name: 'file',
+
             label: '文件管理',
             icon: 'folder',
-            url: 'File.vue'
+            children: [
+                {
+                    path: '/uploadFile',
+                    name: 'uploadFile',
+                    label: '文件上传',
+                    icon: 'setting',
+                    url: 'UploadFile.vue'
+                },
+                {
+                    path: '/excelUpload',
+                    name: 'excelUpload',
+                    label: '上传excel',
+                    icon: 'setting',
+                    url: 'ExcelUpload.vue'
+                },
+                {
+                    path: '/excelExport',
+                    name: 'excelExport',
+                    label: '导出excel',
+                    icon: 'setting',
+                    url: 'ExcelExport.vue'
+                },
+            ]
+
         },
+        {
+            label: '编辑器',
+            icon: 'location',
+            children: [
+                {
+                    path: '/page1',
+                    name: 'page1',
+                    label: '富文本',
+                    icon: 'setting',
+                    url: 'PageOne.vue'
+                },
+                {
+                    path: '/page2',
+                    name: 'page2',
+                    label: 'markdown',
+                    icon: 'setting',
+                    url: 'PageTwo.vue'
+                }
+            ]
+        }
     ]
 }
