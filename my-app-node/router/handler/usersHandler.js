@@ -1,23 +1,28 @@
 const db = require('../../db/index')
 
 exports.getAllUsers = (req, res) => {
-    // 获取前端返回的页数和页码
-    const pages = {}
-    if (req.body.pageNum) fields.pageNum = req.body.pageNum
-    if (req.body.pageSize) fields.pageSize = req.body.pageSize
+    // if (req.body.pageNum) fields.pageNum = req.query.pageNum
+    // if (req.body.pageSize) fields.pageSize = req.query.pageSize
+    // 默认的页码和页号
+    let count
+    const { pageNum = 1, pageSize = 10, name = '' } = req.query
+    db.query('select count(*) as total from users where name like ' + `'%${name}%'`, (err, results) => {
+        count = results[0].total  // 数据库的总条数
 
-    // 查询用户数据总条数
-    db.query(`select count(*) as total from users`, (err, results) => {
-        const count = results[0].total
-        console.log('数据库的总条数:', results[0].total);
     })
 
     // 查询全部用户数据  
-    const sql = `select * from users order by id desc`
+    const sql = `select * from users where name like` + `'%${name}%'` + `order by id desc limit ${(pageNum - 1) * pageSize}, ${pageSize} `
     db.query(sql, (err, results) => {
         if (err) return res.status(400).json(err)
         if (results.length === 0) return res.status(200).json('没有数据!')
-        res.json(results)
+        res.json(
+            {
+                code: 200,
+                list: results,
+                count: count
+            }
+        )
     })
 }
 
@@ -25,7 +30,7 @@ exports.getAllUsers = (req, res) => {
 exports.getOneUsers = (req, res) => {
     if (!req.params.id) return res.status(400).json('错误,请重新查询!')
 
-    const sql = `select * from users where id = ?`
+    const sql = `select * from users where id = ? `
     db.query(sql, req.params.id, (err, results) => {
         if (err) return res.status(400).json(err)
         if (results.length === 0) return res.status(200).json('没有数据!')
@@ -40,10 +45,10 @@ exports.postUsers = (req, res) => {
     if (req.body.name) fields.name = req.body.name
     if (req.body.sex) fields.sex = req.body.sex
     if (req.body.age) fields.age = req.body.age
-    if (req.body.birth) fields.birth = req.body.birth
+    if (req.body.birth) fields.birth = req.body.birth.substr(0, 10)
     if (req.body.addr) fields.addr = req.body.addr
 
-    const sql = `insert into users set ?`
+    const sql = `insert into users set ? `
     db.query(sql, fields, (err, results) => {
         if (err) return res.status(404).json(err)
         if (results.affectedRows !== 1) return res.status(400).json('添加失败')
@@ -59,12 +64,12 @@ exports.putUsers = (req, res) => {
     if (req.body.name) fields.name = req.body.name
     if (req.body.sex) fields.sex = req.body.sex
     if (req.body.age) fields.age = req.body.age
-    if (req.body.birth) fields.birth = req.body.birth
+    if (req.body.birth) fields.birth = req.body.birth.substr(0, 10)
     if (req.body.addr) fields.addr = req.body.addr
-
+    // console.log(fields, req.params.id);
     // console.log(fields);
     // console.log(req.params.id);
-    const sql = `update users set ? where id = ?`
+    const sql = `update users set ? where id = ? `
     db.query(sql, [fields, req.params.id], (err, results) => {
         if (err) return res.status(400).json(err)
         if (results.affectedRows !== 1) return res.status(400).json('编辑失败')
@@ -77,7 +82,7 @@ exports.putUsers = (req, res) => {
 exports.deleteUsers = (req, res) => {
     if (!req.params.id) return res.status(400).json('错误,请重新查询!')
 
-    const sql = `delete from users where id = ?`
+    const sql = `delete from users where id = ? `
     db.query(sql, req.params.id, (err, results) => {
         if (err) return res.status(400).json(err)
         if (results.affectedRows !== 1) return res.status(400).json('删除失败')

@@ -42,7 +42,7 @@ exports.register = (req, res) => {
         }
         ), (err, results) => {
             // 这里的代码没有执行?
-            console.log('我是用户注册时未执行的代码');
+            // console.log('我是用户注册时未执行的代码');
             if (err) {
                 return res.send({
                     status: 404,
@@ -74,7 +74,7 @@ exports.register = (req, res) => {
 
 // 登录的回调函数
 exports.login = (req, res) => {
-    console.log('有人想登陆!');
+    // console.log('有人想登陆!');
     // const adminInfo = req.body
     const name = req.body.name
     const password = req.body.password

@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/456.bb04c23a55.chunk.css","mappings":"AACA,4BAEE,WAAY,CACZ,eAAgB,CAFhB,UAEF,CAHA,kCAOI,UAAW,CADX,SACJ","sources":["webpack://my-app/./src/views/404.vue"],"sourcesContent":["\n.not-found {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n\n  image {\n    width: 60%;\n    height: 60%;\n  }\n}\n"],"names":[],"sourceRoot":""}

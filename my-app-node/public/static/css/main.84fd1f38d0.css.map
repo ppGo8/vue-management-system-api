@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.84fd1f38d0.css","mappings":"AAEA,YAGE,QAAS,CACT,SADF","sources":["webpack://my-app/./src/App.vue"],"sourcesContent":["\n// 注意这里不能添加scoped,因为要全局生效\nhtml,\nbody,\np {\n  margin: 0;\n  padding: 0;\n}\n"],"names":[],"sourceRoot":""}
