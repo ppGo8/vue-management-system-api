@@ -11,7 +11,7 @@
 使用nodejs、express、mysql搭建通用后台管理系统的的RESTful风格接口。
 
 ## 技术栈
-- 后端接口: nodejs + express + mysql
+- 后端接口: nodejs + express + jwt + mysql  
 - 项目上线: 申请、配置阿里云服务器，将项目打包上线。（服务器申请不到3个月不能进行ICP备案，所以还不能访问）
 
 ## 项目运行
